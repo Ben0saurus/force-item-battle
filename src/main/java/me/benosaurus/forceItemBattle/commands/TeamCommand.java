@@ -9,6 +9,8 @@ import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSele
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.GameMode;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -41,6 +43,13 @@ public class TeamCommand {
                                             if (targetTeam == null) {
                                                 targetTeam = score.registerNewTeam(teamName);
                                                 targetTeam.color(color);
+                                            }
+
+
+                                            World gameWorld = GameCommand.getNewWorld();
+                                            if (gameWorld != null) {
+                                                target.teleport(gameWorld.getSpawnLocation());
+                                                target.setGameMode(GameMode.SURVIVAL);
                                             }
 
 

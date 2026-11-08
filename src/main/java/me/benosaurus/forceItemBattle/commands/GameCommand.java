@@ -4,11 +4,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -41,6 +37,8 @@ public class GameCommand {
 
                             for (Player player : Bukkit.getOnlinePlayers()) {
                                 player.teleport(spawnLoc);
+                                player.setGameMode(GameMode.SURVIVAL);
+                                player.getInventory().clear();
                                 player.sendMessage("You have been teleported to a randomly generated new world!");
                             }
 
@@ -59,6 +57,8 @@ public class GameCommand {
 
                                 for (Player player : Bukkit.getOnlinePlayers()) {
                                     player.teleport(spawnLoc);
+                                    player.setGameMode(GameMode.ADVENTURE);
+                                    player.getInventory().clear();
                                     player.sendMessage("The round has been ended and you have been teleported back to lobby!");
                                 }
 
@@ -94,5 +94,9 @@ public class GameCommand {
             }
         }
         return path.delete();
+    }
+
+    public static World getNewWorld() {
+        return newWorld;
     }
 }
