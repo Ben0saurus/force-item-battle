@@ -1,0 +1,6 @@
+name: ForceItemBattle
+version: '1.0.0'
+main: me.benosaurus.forceItemBattle.ForceItemBattle
+description: A force item battle minecraft papermc plugin.
+author: Benosaurus
+api-version: '26.2'
