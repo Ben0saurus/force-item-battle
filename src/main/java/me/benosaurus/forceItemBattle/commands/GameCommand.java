@@ -6,10 +6,15 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.benosaurus.forceItemBattle.ForceItemBattle;
 import me.benosaurus.forceItemBattle.UI.Countdown;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
+import java.util.Random;
 
 public class GameCommand {
 
@@ -26,10 +31,15 @@ public class GameCommand {
 
                             spawnWorld = context.getSource().getPlayerOrThrow().getWorld();
 
+                            ItemStack skips = new ItemStack(Material.BARRIER, 3);
+                            ItemMeta meta = skips.getItemMeta();
+                            meta.displayName(Component.text("Skip Item", NamedTextColor.RED));
+                            skips.setItemMeta(meta);
+
                             newWorldName = "world_" + System.currentTimeMillis();
 
                             WorldCreator creator = new WorldCreator(newWorldName);
-                            creator.seed(new java.util.Random().nextLong());
+                            creator.seed(new Random().nextLong());
 
                             newWorld = creator.createWorld();
 
@@ -48,6 +58,7 @@ public class GameCommand {
                                 player.teleport(spawnLoc);
                                 player.setGameMode(GameMode.SURVIVAL);
                                 player.getInventory().clear();
+                                player.getInventory().addItem(skips);
                                 player.setFallDistance(0);
                                 player.sendMessage("You have been teleported to a randomly generated new world!");
                             }

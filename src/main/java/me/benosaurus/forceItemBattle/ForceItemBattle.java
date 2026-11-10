@@ -7,6 +7,7 @@ import me.benosaurus.forceItemBattle.commands.HealCommand;
 import me.benosaurus.forceItemBattle.commands.TeamCommand;
 import me.benosaurus.forceItemBattle.listeners.ConnectionListener;
 import me.benosaurus.forceItemBattle.listeners.RespawnListener;
+import me.benosaurus.forceItemBattle.listeners.SkipListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public final class ForceItemBattle extends JavaPlugin {
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new ConnectionListener(), this);
         getServer().getPluginManager().registerEvents(new RespawnListener(), this);
+        getServer().getPluginManager().registerEvents(new SkipListener(), this);
 
         registerCommand("heal", List.of("h"), new HealCommand());
 
