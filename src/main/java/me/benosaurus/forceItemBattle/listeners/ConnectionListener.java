@@ -4,6 +4,7 @@ import me.benosaurus.forceItemBattle.commands.GameCommand;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -30,6 +31,9 @@ public class ConnectionListener implements Listener {
         } else {
             player.getInventory().clear();
             player.setGameMode(GameMode.ADVENTURE);
+
+            World world = event.getPlayer().getWorld();
+            world.setDifficulty(Difficulty.PEACEFUL);
         }
 
     }

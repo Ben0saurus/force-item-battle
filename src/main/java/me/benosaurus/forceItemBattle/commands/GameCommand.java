@@ -4,6 +4,8 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
+import me.benosaurus.forceItemBattle.ForceItemBattle;
+import me.benosaurus.forceItemBattle.UI.Countdown;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
@@ -11,11 +13,13 @@ import java.io.File;
 
 public class GameCommand {
 
+    private static Countdown gameTimer;
+
     private static String newWorldName = null;
     private static World spawnWorld = null;
     private static World newWorld = null;
 
-    public static LiteralCommandNode<CommandSourceStack> create() {
+    public static LiteralCommandNode<CommandSourceStack> create(ForceItemBattle plugin) {
         return Commands.literal("game")
                 .then(Commands.literal("start")
                         .executes(context -> {
@@ -32,15 +36,25 @@ public class GameCommand {
                             newWorld.setTime(0);
                             newWorld.setStorm(false);
                             newWorld.setThundering(false);
+                            newWorld.setDifficulty(Difficulty.EASY);
 
                             Location spawnLoc = newWorld.getSpawnLocation();
 
                             for (Player player : Bukkit.getOnlinePlayers()) {
+                                player.setHealth(20);
+                                player.setSaturation(20);
+                                player.setFoodLevel(20);
+
                                 player.teleport(spawnLoc);
                                 player.setGameMode(GameMode.SURVIVAL);
                                 player.getInventory().clear();
+                                player.setFallDistance(0);
                                 player.sendMessage("You have been teleported to a randomly generated new world!");
                             }
+
+                            gameTimer = new Countdown(plugin, 3600);
+                            gameTimer.runTaskTimer(plugin, 0L, 20L);
+                            gameTimer.setRunning(true);
 
                             return Command.SINGLE_SUCCESS;
                         })
@@ -54,8 +68,13 @@ public class GameCommand {
                             } else {
 
                                 Location spawnLoc = spawnWorld.getSpawnLocation();
+                                spawnWorld.setDifficulty(Difficulty.PEACEFUL);
 
                                 for (Player player : Bukkit.getOnlinePlayers()) {
+                                    player.setHealth(20);
+                                    player.setSaturation(20);
+                                    player.setFoodLevel(20);
+
                                     player.teleport(spawnLoc);
                                     player.setGameMode(GameMode.ADVENTURE);
                                     player.getInventory().clear();
@@ -76,6 +95,10 @@ public class GameCommand {
                                 newWorldName = null;
                                 newWorld = null;
                                 spawnWorld = null;
+
+                                gameTimer.setRunning(false);
+                                gameTimer.cancel();
+
                             }
 
                             return Command.SINGLE_SUCCESS;
