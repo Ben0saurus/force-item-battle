@@ -85,6 +85,8 @@ public class GameCommand {
                                 return Command.SINGLE_SUCCESS;
                             } else {
 
+                                GameManager gameManager = plugin.getGameManager();
+
                                 Location spawnLoc = spawnWorld.getSpawnLocation();
                                 spawnWorld.setDifficulty(Difficulty.PEACEFUL);
 
@@ -92,6 +94,9 @@ public class GameCommand {
                                     player.setHealth(20);
                                     player.setSaturation(20);
                                     player.setFoodLevel(20);
+
+                                    Team team = player.getScoreboard().getEntryTeam(player.getName());
+                                    gameManager.clearGoal(team);
 
                                     player.teleport(spawnLoc);
                                     player.setGameMode(GameMode.ADVENTURE);

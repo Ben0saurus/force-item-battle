@@ -58,6 +58,11 @@ public class GameManager {
 
     }
 
+    public void clearGoal(Team team) {
+        teamGoals.clear();
+        teamScores.clear();
+    }
+
 
     public Material getCurrentItem(Team team) {
         return teamGoals.get(team);

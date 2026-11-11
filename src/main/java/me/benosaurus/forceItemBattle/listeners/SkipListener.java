@@ -55,6 +55,8 @@ public class SkipListener implements Listener {
             Material goalItem = gameManager.getCurrentItem(team);
 
             player.sendMessage(Component.text("Skipped Item: " + goalItem.name(), NamedTextColor.GOLD));
+            ItemStack skippedItem = new ItemStack(goalItem);
+            player.give(skippedItem);
             gameManager.assignNewGoal(team);
             player.playSound(player, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1f, 1f);
 
