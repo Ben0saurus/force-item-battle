@@ -6,14 +6,17 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.benosaurus.forceItemBattle.ForceItemBattle;
 import me.benosaurus.forceItemBattle.UI.Countdown;
+import me.benosaurus.forceItemBattle.game.GameManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scoreboard.Team;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.Random;
 
 public class GameCommand {
@@ -30,6 +33,10 @@ public class GameCommand {
                         .executes(context -> {
 
                             spawnWorld = context.getSource().getPlayerOrThrow().getWorld();
+                            GameManager gameManager = plugin.getGameManager();
+
+                            Collection<Team> teams = Bukkit.getScoreboardManager().getMainScoreboard().getTeams();
+                            gameManager.startGame(teams);
 
                             ItemStack skips = new ItemStack(Material.BARRIER, 3);
                             ItemMeta meta = skips.getItemMeta();

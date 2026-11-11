@@ -30,10 +30,11 @@ public class GameManager {
         isRunning = true;
 
         teamGoals.clear();
-        teamScores.clear();
+        teamScores.clear();;
 
         for (Team team : activeTeams) {
             teamScores.put(team, 0);
+            assignNewGoal(team);
         }
 
     }
