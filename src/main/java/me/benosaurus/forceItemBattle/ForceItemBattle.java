@@ -5,6 +5,7 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.benosaurus.forceItemBattle.commands.GameCommand;
 import me.benosaurus.forceItemBattle.commands.HealCommand;
 import me.benosaurus.forceItemBattle.commands.TeamCommand;
+import me.benosaurus.forceItemBattle.game.GameManager;
 import me.benosaurus.forceItemBattle.listeners.ConnectionListener;
 import me.benosaurus.forceItemBattle.listeners.RespawnListener;
 import me.benosaurus.forceItemBattle.listeners.SkipListener;
@@ -14,8 +15,10 @@ import java.util.List;
 
 public final class ForceItemBattle extends JavaPlugin {
 
+
     @Override
     public void onEnable() {
+
         getServer().getPluginManager().registerEvents(new ConnectionListener(), this);
         getServer().getPluginManager().registerEvents(new RespawnListener(), this);
         getServer().getPluginManager().registerEvents(new SkipListener(), this);
